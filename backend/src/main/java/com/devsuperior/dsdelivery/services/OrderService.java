@@ -47,4 +47,16 @@ public class OrderService {
 		order = repository.save(order);
 		return new OrderDTO(order);
 	}
+	
+//	Anotacao abaixo evita locks no banco de dados
+	@org.springframework.transaction.annotation.Transactional
+	public OrderDTO setDelivered(Long id) {
+		Order order = repository.getOne(id);
+		order.setStatus(OrderStatus.DELIVERED);
+		order = repository.save(order);
+		return new OrderDTO(order);
+		
+	}
+	
+	
 }
